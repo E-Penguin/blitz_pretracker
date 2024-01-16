@@ -1,0 +1,66 @@
+;; Example to show usage of PreTracker lib ;;
+;; Based on example C program at https://www.pouet.net/prod.php?which=91409
+;;
+;; Converted to BlitzBasic by E-Penguin
+;;
+WBStartup
+
+NPrint "PreTracker example in BlitzBasic"
+NPrint "by E-Penguin"
+NPrint "Left click for next song"
+NPrint "Right click for next sfx"
+NPrint "Both to quit"
+
+
+;; Initialise the song
+;; This returns the size of chipram required
+chipMemSize.l = PreTSongInit(?song0)
+
+;; Allocate the chip ram
+InitBank 0, chipMemSize, 2
+
+;; Initialise the player
+PreTPlayerInit Bank(0)
+
+;; Set up the VBlank interrupt
+SetInt 5
+    PreTPlayerTick
+End SetInt
+
+currentSong.w = 0
+currentFx.w = 0
+button.w = Joyb(0)
+
+While(button < 3)
+   VWait
+   If button = 1
+       ;; Start a song
+       currentSong = (currentSong + 1)
+       If currentSong > 14 Then currentSong = 0
+
+       PreTStop
+       PreTStartSong currentSong
+   Else
+       If button = 2
+           ;; Play next SoundFX
+           currentFx = (currentFx + 1)
+           If currentFx > 14 Then currentFx = 0
+
+           PreTPlaySfx 3, currentFx, 50, 64
+       EndIf
+   EndIf
+   button = Joyb(0)
+
+Wend
+
+
+;; Tidy up
+PreTStop
+FreeBank 0
+ClrInt 5
+
+End
+
+song0:
+IncBin "tinyus.prt"
+
