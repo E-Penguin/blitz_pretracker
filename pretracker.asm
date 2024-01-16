@@ -6,64 +6,56 @@
 ;
 ; Wrapper by E-Penguin
 ;
+		
 		include	"blitz.i"
 
-ptplayerlib equ 189
+pretplayerlib equ 189
 
-		libheader ptplayerlib,0,0,blitz_finit,0
-		
-		
+		libheader pretplayerlib,0,0,0,0
+				
 		afunction long
 			args	long
 			libs
 			subs	_PreT_SongInit_stub,0,0
-		name	"PreT_SongInit","Pretracker pointer, returns chipmem size"
+		name	"PreTSongInit","Pretracker pointer, returns chipmem size",0
 
 		astatement
 			args	long
 			libs
 			subs	_PreT_PlayerInit_stub,0,0
-		name	"PreT_PlayerInit","Initialise player, chipmem pointer"
+		name	"PreTPlayerInit","Initialise player, chipmem pointer",0
 
 		astatement
 			args	
 			libs
 			subs	_PreT_PlayerTick_stub,0,0
-		name	"PreT_PlayerTick","run player"
+		name	"PreTPlayerTick","run player",0
         
         astatement
 			args	word
 			libs
 			subs	_PreT_StartSong_stub,0,0
-		name	"PreT_StartSong","start player song"
+		name	"PreTStartSong","start player song",0
         
         astatement
 			args	word,word,word,word
 			libs
 			subs	_PreT_PlaySfx_stub,0,0
-		name	"PreT_PlaySfx","start sfx, voiceNum, sfxNum, duration, volume"
+		name	"PreTPlaySfx","start sfx, voiceNum, sfxNum, duration, volume",0
         
 		astatement
 			args	
 			libs
 			subs	_PreT_Stop_stub,0,0
-		name	"PreT_Stop","stop song"	
+		name	"PreTStop","stop song",0
         
         astatement
 			args	word
 			libs
 			subs	_PreT_SetVolume_stub,0,0
-		name	"PreT_SetVolume","Set volume, volume"
-
-blitz_finit:
-		nullsub	_blitz_Pre_T_lib_finit,0,0 ; Call deinit routine on exit
+		name	"PreTSetVolume","Set volume, volume",0
 
 		libfin ; End of Blitz library header
-
-; Nothing to clean up        
-_blitz_Pre_T_lib_finit:
-    rts
-
 
 storeAddressRegisters	macro
 	movem.l a4-a6,-(sp) ; Save registers for Blitz 2
@@ -146,8 +138,6 @@ _PreT_SetVolume_stub:
 player	incbin	"player.bin"
 
 ; Placeholders for structures used by player
-    section bss,bss
+;   section bss,bss
 mySong	ds.w	2048/2
 myPlayer	ds.l	8*1024/4
-
-	end
