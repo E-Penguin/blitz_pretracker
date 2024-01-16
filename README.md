@@ -1,5 +1,6 @@
 # blitz_pretracker
 Amiga BlitzBasic wrapper around PreTracker v1.5 by Abyss!
+Wrapper code by E-Penguin, with inspiration from idrougge's & earok's PT Player library
 
 https://www.pouet.net/prod.php?which=91409
 
